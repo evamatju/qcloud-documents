@@ -1,3 +1,6 @@
+>? **当前页面接口为旧版 API，未来可能停止维护，目前不展示在左侧导航。黑石物理服务器1.0 API 3.0 版本接口定义更加规范，访问时延下降显著，建议使用 <a href="https://cloud.tencent.com/document/api/386/18637" target="_blank">黑石物理服务器1.0 API 3.0</a>。**
+>
+
 ## 功能描述
 RegisterBatchIp 用于指定子网 IP 进行 IP 申请。
 
@@ -26,8 +29,7 @@ GET https://bmvpc.api.qcloud.com/v2/index.php?Action=RegisterBatchIp
 |---------|---------|---------|---------|
 | unVpcId | 系统分配的私有网络 ID，例如：vpc-kd7d06of。可通过 DescribeBmVpcEx 接口查询返回的 unVpcId 值。 |String | 是 | 
 | unSubnetId | 系统分配的私有网络子网 ID，例如：subnet-k20jbhp0。可通过 DescribeBmSubnetEx 接口查询返回的 unSubnetId 值。 |String | 是 | 
-| ipList | 注册 IP 数组，数组个数范围为 1-20。 |Array | 是 | 
-| ipClass |  IP 类型，0 为物理机 IP，1 为云服务器类型 IP，2 为托管类型 IP。默认传 1 |Int | 否 |
+| ipList | 注册 IP 数组，数组个数范围为 1-20。 |Array | 是 |
 
 
 ## 响应

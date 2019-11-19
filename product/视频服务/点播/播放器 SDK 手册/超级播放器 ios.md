@@ -1,84 +1,97 @@
-## 功能介绍
+## 简介
 
-超级播放器是基于`TXVodPlayer`和`TXLivePlayer`实现的集视频信息拉取、横竖屏切换、清晰度选择、弹幕、直播时移等功能于一体的解决方案，**且完全开源**。帮助您在短时间内，打造一个媲美市面上各种流行视频App的播放体验。
+iOS 超级播放器 SDK 是腾讯云开源的一款播放器组件，简单几行代码即可拥有类似腾讯视频强大的播放功能。包括横竖屏切换、清晰度选择、手势和小窗等基础功能，还支持视频缓存，软硬解切换和倍速播放等特殊功能。相比系统播放器，支持格式更多，兼容性更好，功能更强大。同时还具备首屏秒开、低延迟的优点，以及视频缩略图等高级能力。
 
+## SDK 下载
 
-![](https://mc.qcloudimg.com/static/img/c5a7b6e6e8cba617b76fee49aa03da18/image.png)
+点播 iOS 超级播放器的下载地址是 [SuperPlayer_iOS](https://github.com/tencentyun/SuperPlayer_iOS)。
 
-## 接入准备
+## 阅读对象
 
-1. 下载 SDK + Demo 开发包。[下载地址](https://cloud.tencent.com/document/product/454/7873#iOS)）。
+本文档部分内容为腾讯云专属能力，使用前请开通 [腾讯云](https://cloud.tencent.com/) 相关服务，未注册用户可 [注册账号](https://cloud.tencent.com/login)。
 
-2. 超级播放器的 UI 部分源码开源，开源代码位于`Player/SuperPlayer`文件夹，图片资源位于`SuperPlayer.bundle`中，您需要src中的文件分拷贝的您的App工程中。其它依赖的第三方库您可以自行 Pod 添加或在 `Third` 目录中获取
+## 快速集成
 
+### 接入准备
 
-超级播放器依赖的第三方库
+#### 方案1. 官方 CocoaPods
 
-- Masonry
-- SDWebImage
-- AFNetworking
+请将下面代码加入到您的 Podfile 中：
+```
+pod 'SuperPlayer'
+```
 
+#### 方案2. 本地 CocoaPods
 
-## 创建播放器
+[下载 SDK](https://github.com/tencentyun/SuperPlayer_iOS)，解压到本地。此时您可以看到解压后的文件。
+![](https://mc.qcloudimg.com/static/img/5ef04a5e101beea834813e58fc5115ec/androidzippkg.png)
+其中，播放器代码位于`Demo/SuperPlayer`，SDK 库位于 SDK 目录。
+在您的 Podfile 文件，添加下面代码：
+```
+pod 'SuperPlayer', :path => '<解压路径>/Demo/SuperPlayer/SuperPlayer.podspec', :subspecs => ['Player']
+# subspecs 根据下载 SDK 不同会不一样，如果您下载的是专业版，则需要将 Player 改为 Professional，其它以此类推
+```
+命令行输入`pod install`或`pod update`执行安装。
 
-超级播放器主类为`SuperPlayerView`，您需要先创建它并添加到合适的容器View中。
+### 使用播放器
 
+播放器主类为`SuperPlayerView`，创建后即可播放视频。
 ```objective-c
+// 引入头文件
+#import <SuperPlayer/SuperPlayer.h>
 _playerView = [[SuperPlayerView alloc] init];
-
-// 设置代理
+// 设置代理，用于接受事件
 _playerView.delegate = self;
-
-// 设置父View
+// 设置父 View，_playerView 会被自动添加到 holderView 下面
 _playerView.fatherView = self.holderView;
-
+SuperPlayerModel *playerModel = [[SuperPlayerModel alloc] init];
+//设置播放信息
+SuperPlayerVideoId *videoId = [[SuperPlayerVideoId alloc] init];
+video.appId = 1256993030;  //AppId
+video.fileId = @"7447398157015849771";  //视频 FileId
+model.videoId = videoId;
 // 开始播放
 [_playerView playWithModel:self.playerModel];
 ```
+运行代码，可以看到视频在手机上播放，并且界面上大部分功能都处于可用状态。
+![](https://main.qcloudimg.com/raw/128c45edfc77b319475868c21caec2de.png)
 
-## 设置播放数据
+### 选择 FileId
 
-如您所见，播放器开始播放前，需要传入一个SuperPlayerModel对象。在Model对象中，可以设置标题、封面图，以及最重要的视频源。
-视频源有两种格式：一种是常见的url地址，一种是腾讯云的fileId。请根据App需求选一种填写。
+视频 FileId 在一般是在视频上传后，由服务器返回：
+1. 客户端视频发布后，服务器会返回 FileId 到客户端。
+2. 服务端视频上传时，在 [确认上传](https://cloud.tencent.com/document/product/266/9757) 的通知中包含对应的 FileId。
 
-### url方式
-url是最常见的播放源。根据url格式不同，播放器行为也有所不同。
-如果url为rtmp协议或flv流，则播放器默认为直播流，并自动开启时移功能。
+如果文件已存在腾讯云，则可以进入 [媒资管理](https://console.cloud.tencent.com/vod/media) ，找到对应的文件，查看 FileId。如下图所示，ID 即表示 FileId：
+![视频管理](https://main.qcloudimg.com/raw/1a3677d5fe618227a117d7502be42793.png)
 
-> 时移功能即在直播的过程中，可以回看前面任意时间点。超级播放器只支持腾讯云的直播地址回看。您可以用上面提供的Demo，在'RTMP 推流'里单击New开始推流，然后在超级播放中扫码播放，即可体验到时移功能。
+## 缩略图与打点
 
+在播放长视频时，缩略图（雪碧图）和打点信息有助于观众找到感兴趣的点。使用腾讯云服务 API，能快速对视频处理。
+- [截取雪碧图](https://cloud.tencent.com/document/product/266/8101)
+- [增加打点信息](https://cloud.tencent.com/document/product/266/14190)
 
-如果url为mp4或m3u8流，则播放器认为是点播地址，会放开倍速播放、镜像等点播特有的能力。
-
-### fileId方式
-fileId在一般是在视频上传后，由服务器返回：
-
-1. 客户端视频发布后，服务器会返回[fileId](https://cloud.tencent.com/document/product/584/9367#8..E5.8F.91.E5.B8.83.E7.BB.93.E6.9E.9C)到客户端
-2. 服务端视频上传，在[确认上传](https://cloud.tencent.com/document/product/266/9757)的通知中包含对应的fileId
-
-如果文件已存在腾讯云，则可以进入 [点播视频管理](https://console.cloud.tencent.com/video/videolist) ，找到对应的文件。点开后在右侧视频详情中，可以看到appId和fileId。
-
-![视频管理](https://mc.qcloudimg.com/static/img/fcad44c3392b229f3a53d5f8b2c52961/image.png)
-
-通过fileId方式播放，播放器界面会显示后台已转码的各个清晰度，并能实现自由切换。
-
-## 切换视频
-
-播放另一个视频，您只需重新调用`playWithModel:`方法。
+任务执行成功后，播放器的界面会增加新的元素。
+![](https://main.qcloudimg.com/raw/55ebce6d0c703dafa1ac131e1852e025.png)
 
 ## 小窗播放
 
-小窗播是指在App内，悬浮在主window上的播放器。使用小窗播放非常简单，只需要在适当位置编写下面代码即可
+小窗播放是指在 App 内，悬浮在主 Window 上的播放器。使用小窗播放非常简单，只需要在适当位置调用下面代码即可：
 ```objective-c
-SuperPlayerWindowShared.superPlayer = _playerView; // 设置小窗显示的播放器
-SuperPlayerWindowShared.backController = self;  // 设置返回的view controller
-[SuperPlayerWindowShared show]; // 悬浮显示
+[SuperPlayerWindow sharedInstance].superPlayer = _playerView; // 设置小窗显示的播放器
+[SuperPlayerWindow sharedInstance].backController = self;  // 设置返回的 view controller
+[[SuperPlayerWindow sharedInstance] show]; // 悬浮显示
+```
+![](https://main.qcloudimg.com/raw/e2ee64230af1b9c3a79cad935afa8b6a.jpeg)
+
+## 退出播放
+
+当不需要播放器时，调用 resetPlayer 清理播放器内部状态，释放内存。
+```objective-c
+[_playerView resetPlayer];
 ```
 
-## 移除播放器
+## 更多功能
 
-当不需要播放器时，调用resetPlayer清理播放器内部状态，防止干扰下次播放。
-
-```objective-c
-[_playerView resetPlayer];  //非常重要
-```
+完整功能可扫码下载视频云工具包体验，或直接运行工程 Demo。
+![iOS二维码下载](https://main.qcloudimg.com/raw/b670e99ddb3f0d828798520e19f40fa7.png)
