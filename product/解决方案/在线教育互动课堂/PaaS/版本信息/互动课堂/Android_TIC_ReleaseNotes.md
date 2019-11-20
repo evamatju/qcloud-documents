@@ -1,7 +1,5 @@
 # Release Notes - Android
 
-<<<<<<< HEAD
-=======
 ## 2019.09.25
 
 - 进房参数TICClassroomOption增加compatSaas字段，兼容SaaS方案
@@ -19,7 +17,6 @@
 | :-: | :-: | :-: |
 |6.5.7272|4.4.900|2.3.2
 
->>>>>>> tencentyun-master
 ## 2019.07.12
 1. TIC变更
     - 增加事件上报，方便问题定位;

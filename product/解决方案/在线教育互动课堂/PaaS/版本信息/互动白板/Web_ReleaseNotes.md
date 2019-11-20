@@ -1,7 +1,5 @@
 # Release Notes - Web
 
-<<<<<<< HEAD
-=======
 ## 2.3.6 @ 2019.11.12
 
 - 转码资源全部接入CDN，请务必升级。
@@ -35,7 +33,6 @@
     - 新增addTranscodeFile接口支持restapi转码结果
     - 废弃setTextFontFamily(设置文字输入字体)和getTextFontFamily(获取文字输入字体)接口
 
->>>>>>> tencentyun-master
 ## 2.3.1 @ 2019.08.01
 1. 白板
     - 修复文本框选不精确问题；

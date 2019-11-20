@@ -1,7 +1,5 @@
 # Release Notes - iOS & macOS
 
-<<<<<<< HEAD
-=======
 ## 2.3.6 @ 2019.11.18
 
 - 删除接口
@@ -60,7 +58,6 @@
 - 增加回调
     - onTEBAddTranscodeFile 添加转码文件回调
 
->>>>>>> tencentyun-master
 ## 2.3.1 @ 2019.08.01
 - 激光笔优化
 - 修复iOS8背景图片白板涂鸦闪屏问题

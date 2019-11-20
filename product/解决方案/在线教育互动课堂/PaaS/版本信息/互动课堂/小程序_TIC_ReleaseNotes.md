@@ -1,7 +1,5 @@
 # Release Notes - 小程序
 
-<<<<<<< HEAD
-=======
 ## 2019.10.22
 
 1. bug修复
@@ -12,7 +10,6 @@
 1. bug修复
     - 修复webrtcroom获取推流地址的错误码处理
 
->>>>>>> tencentyun-master
 ## 2019.05.22
 
 1. bug修复

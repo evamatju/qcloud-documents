@@ -1,7 +1,5 @@
 # Release Notes - iOS & macOS
 
-<<<<<<< HEAD
-=======
 ## 2019.11.18
 
 | | TRTC版本 | TIM版本 | TEduBoard版本 |
@@ -66,7 +64,6 @@
 | **macOS** | 6.5.7272 | 4.4.716 | 2.3.1 |
 
 
->>>>>>> tencentyun-master
 ## 2019.07.18
 
 新增功能

@@ -1,7 +1,5 @@
 # Release Notes - 小程序
 
-<<<<<<< HEAD
-=======
 ## 2.3.6 @ 2019.11.08
 1. 转码资源全部接入CDN，请务必升级。
 2. 废弃addFile，addH5PPTFile接口，废弃TEB_ADDFILE，TEB_ADDH5PPTFILE事件。
@@ -48,7 +46,6 @@
 | 动态设置白板比例 | ✖ |  ✔ | |
 
 
->>>>>>> tencentyun-master
 ## 2.1.0 @ 2019.06.25
 1. 涂鸦绘制性能优化
 2. 支持橡皮擦滑动擦除
